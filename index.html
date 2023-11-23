@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/mystyles.css">
+    <title>Foundation</title>
+    <style>
+        /* Custom styles for the sidebar */
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            height: 93vh;
+        }
+
+        /* Style for the content area */
+        .content {
+            padding: 15px;
+        }
+
+        .chart-container {
+            width: 80%;
+            margin: auto;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="menu">
+                <li><img src="logo_black.png" alt="logo"></li>
+                </li>
+            </ul>
+        </div>
+        </ul>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="grid-x">
+            <div class="cell large-2 medium-3 sidebar">
+                <ul class="vertical menu drilldown" data-drilldown>
+                    <li><a href="#">Grafieken aanpassen</a>
+                        <ul class="menu vertical nested">
+                            <li><select>
+                                <option>Kies een grafiek</option>
+                                <option>Opdrachten per dag</option>
+                                <option>Opdrachten</option>
+                                <option>Opdrachten</option>
+                                <option>Dagelijkse Xp</option>
+                                <option>level</option>
+                                <option>Vakken</option>
+                            </select></li>
+                            <li><input type="number" placeholder="0"></li>
+                            <li><a href="index.html"><input type="submit" value="verstuur"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="cell large-2 medium-3">
+            <div>
+                    <h4>Opdrachten per dag</h4>
+                    <canvas id="barChart" width="250" height="250"></canvas>
+                </div>
+                <div class="cell">
+                    <h4>Dagelijkse Xp</h4>
+                    <canvas id="lineChart" width="250" height="250"></canvas>
+                </div>
+            </div>
+            <div>
+                <div class="chart-container cell">
+                    <h4>Opdrachten</h4>
+                    <canvas id="pieChart" width="300" height="250"></canvas>
+                </div>
+                <div>
+                    <h4>level</h4>
+                    <canvas id="radarChart" width="300" height="250"></canvas>
+                </div>
+            </div>
+            <div>
+                <div class="chart-container cell">
+                    <h4>Trails</h4>
+                    <canvas id="doughnutChart" width="300" height="250"></canvas>
+                </div>
+                <div>
+                    <h4>Vakken</h4>
+                    <canvas id="bubbleChart" width="300" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/foundation-sites/dist/js/foundation.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+    <script>
+        // Data voor verschillende diagrammen
+        var barChartData = {
+            labels: ['Ma', 'Di', 'Wo', 'Do', 'Vr'],
+            datasets: [{
+                label: 'Opdrachten per dag gemaakt',
+                data: [8, 10, 6, 3, 9],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var lineChartData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                label: 'Xp',
+                data: [150, 180, 90, 100, 90],
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var pieChartData = {
+            labels: ['Goedgekeurd', 'Foutgekeurd', 'Nog niet nagekeken'],
+            datasets: [{
+                data: [70, 20, 8],
+                backgroundColor: ['green', 'red', 'blue']
+            }]
+        };
+
+        var radarChartData = {
+            labels: ['#1', '#2', '#3', '#4', '#5', '#6', '#7'],
+            datasets: [{
+                label: 'Level per leerling',
+                data: [25, 25, 24, 24, 23, 23, 20],
+                fill: true,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(75, 192, 192, 1)'
+            }]
+        };
+
+        var doughnutChartData = {
+            labels: ['Goedgekeurd', 'Foutgekeurd', 'Nog niet nagekeken'],
+            datasets: [{
+                data: [300, 50, 100],
+                backgroundColor: ['green', 'red', 'blue']
+            }]
+        };
+
+        var bubbleChartData = {
+            datasets: [{
+                label: 'Bubble Chart',
+                data: [{
+                    x: 20,
+                    y: 30,
+                    r: 15
+                }, {
+                    x: 40,
+                    y: 10,
+                    r: 10
+                }, {
+                    x: 30,
+                    y: 25,
+                    r: 20
+                }],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Configuratieopties voor alle diagrammen
+        var options = {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Maak verschillende diagrammen op hun respectievelijke canvas-elementen
+        var barChartCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barChartCtx, { type: 'bar', data: barChartData, options: options });
+
+        var lineChartCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineChartCtx, { type: 'line', data: lineChartData, options: options });
+
+        var pieChartCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieChartCtx, { type: 'pie', data: pieChartData });
+
+        var radarChartCtx = document.getElementById('radarChart').getContext('2d');
+        new Chart(radarChartCtx, { type: 'radar', data: radarChartData, options: options });
+
+        var doughnutChartCtx = document.getElementById('doughnutChart').getContext('2d');
+        new Chart(doughnutChartCtx, { type: 'doughnut', data: doughnutChartData });
+
+        var bubbleChartCtx = document.getElementById('bubbleChart').getContext('2d');
+        new Chart(bubbleChartCtx, { type: 'bubble', data: bubbleChartData, options: options });
+    </script>
+
+</body>
+
+</html>
